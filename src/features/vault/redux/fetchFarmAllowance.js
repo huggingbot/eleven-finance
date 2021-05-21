@@ -18,7 +18,7 @@ export function fetchFarmAllowance({ address, web3, pool }) {
     });
 
     const promise = new Promise((resolve, reject) => {
-      const contract = new web3.eth.Contract(erc20ABI, pool.earnedTokenAddress);
+      const contract = new web3.eth.Contract(erc20ABI, pool.lpTokenAddress);
 
       fetchAllowance({
         web3,

@@ -59,7 +59,7 @@ export const pools = [
     defaultApy: "39.54",
     pricePerFullShare: 1,
     pastPricePerFullShare: 1,
-    lpTokenAddress: '0xac5F2951b6e2A022B061e6F68Ddc0EA61Ec18adF', // Lp token address
+    lpTokenAddress: '0x33660f7b3bb56fcf47e517e8cce7f958189a96fc', // Lp token address
     tokenAddress: Address.NINI_TOKEN_ADDRESS,
     quoteTokenAddress: Address.WAVAX_TOKEN_ADDRESS,
     categories: ['Pancake'],

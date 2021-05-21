@@ -48,8 +48,6 @@ export function fetchPoolRewards({ address, web3, pool }) {
 
           return reject(error.message || error)
         }
-        console.log('data', data)
-
         const poolRewards = {
           pendingToken: pool.claimable && data[1]
             ? byDecimals(data[1], tokenDecimals)
