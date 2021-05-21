@@ -1,28 +1,28 @@
 {
   "files": {
-    "main.css": "/static/css/main.2e5a752b.chunk.css",
-    "main.js": "/static/js/main.44afa2c3.chunk.js",
-    "main.js.map": "/static/js/main.44afa2c3.chunk.js.map",
-    "runtime-main.js": "/static/js/runtime-main.3a710a54.js",
-    "runtime-main.js.map": "/static/js/runtime-main.3a710a54.js.map",
-    "static/js/2.1c54f120.chunk.js": "/static/js/2.1c54f120.chunk.js",
-    "static/js/2.1c54f120.chunk.js.map": "/static/js/2.1c54f120.chunk.js.map",
-    "index.html": "/index.html",
-    "precache-manifest.151fdc3db56e692964ee98cad1a088e2.js": "/precache-manifest.151fdc3db56e692964ee98cad1a088e2.js",
-    "service-worker.js": "/service-worker.js",
-    "static/css/main.2e5a752b.chunk.css.map": "/static/css/main.2e5a752b.chunk.css.map",
-    "static/js/2.1c54f120.chunk.js.LICENSE.txt": "/static/js/2.1c54f120.chunk.js.LICENSE.txt",
-    "static/media/11-logo.png": "/static/media/11-logo.a95ba926.png",
-    "static/media/ELE-logo.svg": "/static/media/ELE-logo.387d8122.svg",
-    "static/media/NINI-AVAX LP-logo.svg": "/static/media/NINI-AVAX LP-logo.34f25f68.svg",
-    "static/media/NINI-logo.png": "/static/media/NINI-logo.a95ba926.png",
-    "static/media/WorkSans-VariableFont_wght.ttf": "/static/media/WorkSans-VariableFont_wght.b2439691.ttf",
-    "static/media/clint-mckoy.jpg": "/static/media/clint-mckoy.9f17b8f6.jpg"
+    "main.css": "/paniniswap/static/css/main.2e5a752b.chunk.css",
+    "main.js": "/paniniswap/static/js/main.5921114c.chunk.js",
+    "main.js.map": "/paniniswap/static/js/main.5921114c.chunk.js.map",
+    "runtime-main.js": "/paniniswap/static/js/runtime-main.3432e190.js",
+    "runtime-main.js.map": "/paniniswap/static/js/runtime-main.3432e190.js.map",
+    "static/js/2.bdfd4251.chunk.js": "/paniniswap/static/js/2.bdfd4251.chunk.js",
+    "static/js/2.bdfd4251.chunk.js.map": "/paniniswap/static/js/2.bdfd4251.chunk.js.map",
+    "index.html": "/paniniswap/index.html",
+    "precache-manifest.4cd016a4f93f0ef27846e12fa33a15d3.js": "/paniniswap/precache-manifest.4cd016a4f93f0ef27846e12fa33a15d3.js",
+    "service-worker.js": "/paniniswap/service-worker.js",
+    "static/css/main.2e5a752b.chunk.css.map": "/paniniswap/static/css/main.2e5a752b.chunk.css.map",
+    "static/js/2.bdfd4251.chunk.js.LICENSE.txt": "/paniniswap/static/js/2.bdfd4251.chunk.js.LICENSE.txt",
+    "static/media/11-logo.png": "/paniniswap/static/media/11-logo.a95ba926.png",
+    "static/media/ELE-logo.svg": "/paniniswap/static/media/ELE-logo.387d8122.svg",
+    "static/media/NINI-AVAX LP-logo.svg": "/paniniswap/static/media/NINI-AVAX LP-logo.34f25f68.svg",
+    "static/media/NINI-logo.png": "/paniniswap/static/media/NINI-logo.a95ba926.png",
+    "static/media/WorkSans-VariableFont_wght.ttf": "/paniniswap/static/media/WorkSans-VariableFont_wght.b2439691.ttf",
+    "static/media/clint-mckoy.jpg": "/paniniswap/static/media/clint-mckoy.9f17b8f6.jpg"
   },
   "entrypoints": [
-    "static/js/runtime-main.3a710a54.js",
-    "static/js/2.1c54f120.chunk.js",
+    "static/js/runtime-main.3432e190.js",
+    "static/js/2.bdfd4251.chunk.js",
     "static/css/main.2e5a752b.chunk.css",
-    "static/js/main.44afa2c3.chunk.js"
+    "static/js/main.5921114c.chunk.js"
   ]
 }
