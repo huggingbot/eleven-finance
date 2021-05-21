@@ -25,7 +25,7 @@ export function fetchFarmClaim({ address, web3, pool }) {
         earnContractAddress,
         earnContractAbi: null,
         masterchefPid,
-        dispatch
+        dispatch,
       })
         .then(data => {
           dispatch({

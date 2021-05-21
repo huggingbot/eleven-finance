@@ -10,7 +10,7 @@ export const farmClaim = async ({ web3, address, earnContractAddress, earnContra
 const _claim = ({ contract, address, masterchefPid, dispatch }) => {
   return new Promise((resolve, reject) => {
     contract.methods
-      .deposit(masterchefPid, 0)
+      .deposit(masterchefPid, 0, '0x0000000000000000000000000000000000000000')
       .send({ from: address })
       .on('transactionHash', function (hash) {
         dispatch(

@@ -64,7 +64,7 @@ const FarmOnly = ({ pool, index, tokenBalance, stakedBalance, pendingRewards, pe
             <div>
               <div className={classes.balance}>
                 {pendingRewardsLoaded
-                  ? formatDecimals(pendingRewards?.pendingEle)
+                  ? formatDecimals(pendingRewards?.pendingToken)
                   : (<Loader/>)
                 }
               </div>
