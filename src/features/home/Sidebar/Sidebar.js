@@ -142,7 +142,7 @@ const Sidebar = ({ connected, address, connectWallet, disconnectWallet }) => {
             <div className={classes.price}>
               <img src={logo} />
               { fetchTokenPriceDone
-                ? '$' + (tokenPriceUsd ? tokenPriceUsd.toFixed(2) : '--')
+                ? '$' + (tokenPriceUsd ? tokenPriceUsd.toFixed(4) : '--')
                 : <Loader />
               }
             </div>

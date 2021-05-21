@@ -126,10 +126,12 @@ export function fetchPoolBalances(data) {
               const poolWeight = allocPoint.div(new BigNumber(totalAllocPoint))
 
               /* niniPriceCall */
-              const niniTokenPriceUsd = new BigNumber(data[4][0].niniTokenPriceUsd)
+              const rawNiniTokenPriceUsd = data[4][0].niniTokenPriceUsd
+              const niniTokenPriceUsd = new BigNumber(rawNiniTokenPriceUsd[rawNiniTokenPriceUsd.length - 1])
 
               /* priceCalls */
-              const quoteTokenPriceUsd = new BigNumber(data[5][callIndex].quoteTokenPriceUsd)
+              const rawQuoteTokenPriceUsd = data[5][callIndex].quoteTokenPriceUsd
+              const quoteTokenPriceUsd = new BigNumber(rawQuoteTokenPriceUsd[rawQuoteTokenPriceUsd.length - 1])
               totalLiquidity = getTotalLiquidity(lpTotalInQuoteToken, quoteTokenPriceUsd)
               apr = getPoolApr(poolWeight, niniTokenPriceUsd, totalLiquidity)
             }
