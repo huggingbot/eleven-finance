@@ -6,14 +6,14 @@ import Grid from '@material-ui/core/Grid';
 import { useConnectWallet } from 'features/home/redux/hooks';
 import { useFetchPoolRewards } from 'features/vault/redux/fetchPoolRewards';
 
-import Claimable from './Layouts/Claimable';
+// import Claimable from './Layouts/Claimable';
 import FarmOnly from './Layouts/FarmOnly';
-import WithFarm from './Layouts/WithFarm';
+// import WithFarm from './Layouts/WithFarm';
 
 import styles from './styles';
 const useStyles = createUseStyles(styles);
 
-const PoolDetails = ({ pool, index, tokenBalance, depositedBalance, stakedBalance }) => {
+const PoolDetails = ({ pool, index, tokenBalance, /* depositedBalance, */ stakedBalance }) => {
   const classes = useStyles();
 
   const { web3, address } = useConnectWallet();
@@ -25,7 +25,6 @@ const PoolDetails = ({ pool, index, tokenBalance, depositedBalance, stakedBalanc
         fetchPoolRewards({ address, web3, pool })
       }
     };
-
     fetch();
 
     const id = setInterval(fetch, 15000);
@@ -34,7 +33,7 @@ const PoolDetails = ({ pool, index, tokenBalance, depositedBalance, stakedBalanc
 
   return (
     <Grid item container xs={12} className={classes.poolDetails}>
-      {pool.farm && pool.earnContractAddress && (
+      {/* {pool.farm && pool.earnContractAddress && (
         <WithFarm pool={pool}
           index={index}
           tokenBalance={tokenBalance}
@@ -42,9 +41,9 @@ const PoolDetails = ({ pool, index, tokenBalance, depositedBalance, stakedBalanc
           stakedBalance={stakedBalance}
           pendingRewards={pendingRewards[pool.id]}
           pendingRewardsLoaded={fetchPoolRewardsDone[pool.id]} />
-      )}
+      )} */}
 
-      {pool.farm && ! pool.earnContractAddress && (
+      {pool.farm && !pool.earnContractAddress && (
         <FarmOnly pool={pool}
           index={index}
           tokenBalance={tokenBalance}
@@ -53,14 +52,14 @@ const PoolDetails = ({ pool, index, tokenBalance, depositedBalance, stakedBalanc
           pendingRewardsLoaded={fetchPoolRewardsDone[pool.id]} />
       )}
 
-      {pool.claimable && (
+      {/* {pool.claimable && (
         <Claimable pool={pool}
           index={index}
           tokenBalance={tokenBalance}
           depositedBalance={depositedBalance}
           pendingRewards={pendingRewards[pool.id]}
           pendingRewardsLoaded={fetchPoolRewardsDone[pool.id]} />
-      )}
+      )} */}
     </Grid>
   );
 }

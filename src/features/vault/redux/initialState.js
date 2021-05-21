@@ -2,19 +2,11 @@ import { pools, categories } from "../../configure/pools";
 
 const tokens = {};
 
-pools.map(({token, tokenAddress, earnedToken, earnedTokenAddress})=> {
+pools.forEach(({token, lpTokenAddress})=> {
   tokens[token] = {
-    tokenAddress: tokenAddress,
+    lpTokenAddress: lpTokenAddress,
     tokenBalance: 0
   }
-
-  if (earnedTokenAddress != tokenAddress) {
-    tokens[earnedToken] = {
-      tokenAddress: earnedTokenAddress,
-      tokenBalance: 0
-    }
-  }
-  return '';
 })
 
 const getInitialFilters = () => {

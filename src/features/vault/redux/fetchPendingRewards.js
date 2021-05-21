@@ -5,7 +5,7 @@ import async from 'async';
 
 import { getNetworkMulticall } from 'features/helpers/getNetworkData';
 import { byDecimals } from 'features/helpers/bignumber';
-import { fetchPendingEle, fetchPendingReward } from '../../web3';
+import { fetchPendingNini, fetchPendingReward } from '../../web3';
 
 import { pool4Abi, vaultFarmAbi } from 'features/configure/abi';
 
@@ -118,10 +118,10 @@ export function fetchPendingRewards({ address, web3, pools }) {
         } else {
           const { earnContractAddress, masterchefPid } = pool.farm;
 
-          // Get farm pending ELE reward
+          // Get farm pending NINI reward
           requests.push(
             (callbackInner) => {
-              fetchPendingEle({
+              fetchPendingNini({
                 web3,
                 address,
                 earnContractAddress,

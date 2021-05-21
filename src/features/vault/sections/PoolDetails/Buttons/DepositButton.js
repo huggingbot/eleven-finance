@@ -26,7 +26,7 @@ const DepositButton = ({ pool, index, balance }) => {
 
   useEffect(() => {
     // If pool uses network's native token (ETH, BNB, etc) - leave some reserve for TX fees
-    if (pool.tokenAddress === null) {
+    if (pool.lpTokenAddress === null) {
       setMaxAmount(balance.minus(0.02));
     } else {
       setMaxAmount(new BigNumber(balance.toString()))
@@ -37,7 +37,7 @@ const DepositButton = ({ pool, index, balance }) => {
     fetchApproval({
       address,
       web3,
-      tokenAddress: pool.tokenAddress,
+      tokenAddress: pool.lpTokenAddress,
       contractAddress: pool.earnContractAddress,
       index
     })
@@ -53,7 +53,7 @@ const DepositButton = ({ pool, index, balance }) => {
 
     let amountValue = amount.replace(',', '')
 
-    if (pool.tokenAddress) {
+    if (pool.lpTokenAddress) {
       fetchDeposit({
         address,
         web3,

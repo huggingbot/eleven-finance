@@ -29,7 +29,7 @@ const FarmOnly = ({ pool, index, tokenBalance, stakedBalance, pendingRewards, pe
           {pool.price && (
             <div className={classes.balanceSecondary}>${tokenBalance.times(pool.price).toFixed(2)}</div>
           )}
-          <div className={classes.balanceDescription}>{t('Vault-Deposited')}</div>
+          <div className={classes.balanceDescription}>Balance</div>
 
           {!pool.isDiscontinued && (
             <StakeButton pool={pool} index={index} balance={tokenBalance} />

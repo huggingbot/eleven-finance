@@ -52,7 +52,7 @@ export function connectWallet(web3Modal) {
       dispatch({type: HOME_CONNECT_WALLET_SUCCESS, data: {web3, address, networkId}})
 
       // Debug message with last synchronized block
-      web3.eth.getBlockNumber().then(res => console.info('Wallet connected. Last block: ' + res));
+      // web3.eth.getBlockNumber().then(res => console.info('Wallet connected. Last block: ' + res));
     } catch (error) {
       dispatch({ type: HOME_CONNECT_WALLET_FAILURE });
     }

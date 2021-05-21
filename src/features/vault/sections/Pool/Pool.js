@@ -15,9 +15,9 @@ const Pool = ({ pool, index, tokens, fetchBalancesDone, fetchPoolDataDone }) => 
 
   const [isOpen, setIsOpen] = useState(false);
   const [tokenBalance, setTokenBalance] = useState(new BigNumber(0));
-  const [depositedBalance, setDepositedBalance] = useState(new BigNumber(0));
+  // const [depositedBalance, setDepositedBalance] = useState(new BigNumber(0));
   const [stakedBalance, setStakedBalance] = useState(new BigNumber(0));
-  const [depositedAndStaked, setDepositedAndStaked] = useState(null);
+  // const [depositedAndStaked, setDepositedAndStaked] = useState(null);
 
   const toggleCard = useCallback(() => setIsOpen(!isOpen), [isOpen]);
 
@@ -27,15 +27,15 @@ const Pool = ({ pool, index, tokens, fetchBalancesDone, fetchPoolDataDone }) => 
     }
 
     if (fetchPoolDataDone) {
-      const depositedBalance = pool.earnContractAddress
-        ? byDecimals(tokens[pool.earnedToken].tokenBalance, pool.itokenDecimals).times(pool.pricePerFullShare)
-        : new BigNumber(0);
+      // const depositedBalance = pool.earnContractAddress
+      //   ? byDecimals(tokens[pool.earnedToken].tokenBalance, pool.itokenDecimals).times(pool.pricePerFullShare)
+      //   : new BigNumber(0);
 
       const stakedBalance = (pool.stakedAmount || new BigNumber(0)).times(pool.pricePerFullShare);
 
-      setDepositedBalance(depositedBalance);
+      // setDepositedBalance(depositedBalance);
       setStakedBalance(stakedBalance);
-      setDepositedAndStaked(depositedBalance.plus(stakedBalance));
+      // setDepositedAndStaked(depositedBalance.plus(stakedBalance));
     }
   }, [tokens, pool, fetchPoolDataDone])
 
@@ -45,7 +45,7 @@ const Pool = ({ pool, index, tokens, fetchBalancesDone, fetchPoolDataDone }) => 
     >
       <PoolSummary pool={pool}
         tokenBalance={tokenBalance}
-        depositedBalance={depositedAndStaked}
+        // depositedBalance={depositedAndStaked}
         fetchBalanceDone={fetchBalancesDone}
         onClick={toggleCard}
       />
@@ -62,7 +62,7 @@ const Pool = ({ pool, index, tokens, fetchBalancesDone, fetchPoolDataDone }) => 
         <PoolDetails pool={pool}
           index={index}
           tokenBalance={tokenBalance}
-          depositedBalance={depositedBalance}
+          // depositedBalance={depositedBalance}
           stakedBalance={stakedBalance}
         />
       </Transition>

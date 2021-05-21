@@ -18,4 +18,6 @@ export {
     pool4Abi,
 } from './abi';
 export { pools } from './pools';
+export { Address } from './addresses'
 export { supportedChains } from './chains';
+export { NINI_PER_BLOCK, BLOCK_TIME, BLOCKS_PER_YEAR } from './constants'

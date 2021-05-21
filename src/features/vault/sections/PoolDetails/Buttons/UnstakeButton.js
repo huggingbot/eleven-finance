@@ -66,7 +66,7 @@ const UnstakeButton = ({ pool, index, balance }) => {
         decimals={pool.itokenDecimals}
         onConfirm={handleUnstake}
 
-        title={'Unstake from Farm'}
+        title={'Unstake from Pool'}
         buttonText={'Unstake'}
         buttonIsLoading={fetchFarmUnstakePending[pool.id]}
 

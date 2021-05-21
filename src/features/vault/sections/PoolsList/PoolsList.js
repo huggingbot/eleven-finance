@@ -4,7 +4,6 @@ import { createUseStyles } from 'react-jss';
 import NumberFormat from 'react-number-format';
 import _ from 'lodash';
 
-
 import Filters from '../Filters/Filters';
 import Pool from '../Pool/Pool';
 
@@ -33,7 +32,7 @@ export default function PoolsList({ filtersCategory }) {
 
   const [fetchPoolDataDone, setFetchPoolDataDone] = useState(false);
 
-  const [data, setData] = useState([]);
+  const [tvl, setTvl] = useState(0);
 
   useEffect(() => {
     if (filtersCategory) {
@@ -43,9 +42,15 @@ export default function PoolsList({ filtersCategory }) {
         }
       })
     }
-
-    loadData();
   }, []);
+
+  useEffect(() => {
+    let tvlSum = 0
+    pools.forEach(pool => {
+      tvlSum += (pool.totalLiquidity || 0)
+    })
+    setTvl(tvlSum)
+  }, [pools])
 
   useEffect(() => {
     if (fetchPoolBalancesDone && fetchFarmsStakedDone) {
@@ -53,49 +58,14 @@ export default function PoolsList({ filtersCategory }) {
     }
   }, [fetchPoolBalancesDone, fetchFarmsStakedDone])
 
-  const loadData = async () => {
-    const response = await fetch("https://eleven.finance/api.json");
-    const json = await response.json();
-
-    const normalizedData = pools.map((pool) => {
-      let token = pool.token;
-      let vault = json[token]?.vault;
-      let tvl = json[token]?.tvl;
-      pool["vault"] = vault;
-      pool["tvl"] = tvl;
-      pool['price'] = json[token]?.price;
-      pool['farmStats'] = json[token]?.farm;
-
-      if (pool.id == 'elebnb' && json[token]) {
-        pool.farmStats = {
-          apy: json[token].apy
-        }
-      }
-
-      const poolStats = pool.claimable
-        ? pool.vault
-        : pool.farmStats;
-
-      pool.apy = poolStats?.apy;
-      pool.apr = poolStats?.apr;
-
-      return pool;
-    });
-
-    normalizedData["totalvaluelocked"] = json["totalvaluelocked"]
-
-    setData(normalizedData);
-  }
-
   useEffect(() => {
-    const fetch = () => {
+    const fetch = async () => {
       if (address && web3) {
         fetchBalances({ address, web3, tokens });
         fetchPoolBalances({ address, web3, pools });
-        fetchFarmsStaked({ address, web3, pools});
+        fetchFarmsStaked({ address, web3, pools});        
       }
     }
-
     fetch();
 
     const id = setInterval(fetch, 15000);
@@ -106,7 +76,7 @@ export default function PoolsList({ filtersCategory }) {
     <>
       <h2 className={classes.h2}>{t('Vault-Main-Title')}</h2>
       <h3 className={classes.h3}>
-        TVL: <NumberFormat value={data.totalvaluelocked} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={0} />
+        TVL: <NumberFormat value={tvl} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={0} />
       </h3>
 
       <Filters />

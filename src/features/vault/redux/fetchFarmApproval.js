@@ -18,7 +18,7 @@ export function fetchFarmApproval({ address, web3, pool }) {
       approval({
         web3,
         address,
-        tokenAddress: pool.earnedTokenAddress,
+        tokenAddress: pool.lpTokenAddress,
         contractAddress: pool.farm.earnContractAddress,
         dispatch
       }).then(data => {

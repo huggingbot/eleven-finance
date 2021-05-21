@@ -29,7 +29,7 @@ const WithdrawButton = ({ pool, index, balance }) => {
 
     let amountValue = amount.replace(',', '')
 
-    if (pool.tokenAddress) {
+    if (pool.lpTokenAddress) {
       fetchWithdraw({
         address,
         web3,

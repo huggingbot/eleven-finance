@@ -1,11 +1,10 @@
 import { useCallback } from 'react';
 import { earnContractABI, erc20ABI } from "../../configure";
-import bigfootBnbBankABI from '../../configure/abis/bigfootBnbBank';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import BigNumber from 'bignumber.js';
 import { MultiCall } from 'eth-multicall';
 
-import { getNetworkMulticall, getNetworkTokenShim } from 'features/helpers/getNetworkData';
+import { getNetworkMulticall } from 'features/helpers/getNetworkData';
 import { byDecimals } from 'features/helpers/bignumber';
 
 import {
@@ -13,6 +12,21 @@ import {
   VAULT_FETCH_POOL_BALANCES_SUCCESS,
   VAULT_FETCH_POOL_BALANCES_FAILURE,
 } from './constants';
+import { pancakeRouterAbi } from '../../web3/fetchPancakeOutputAmount'
+import { Address, NINI_PER_BLOCK, BLOCKS_PER_YEAR } from '../../configure'
+
+const DEFAULT_TOKEN_DECIMAL = new BigNumber(10).pow(18)
+
+const getTotalLiquidity = (lpTotalInQuoteToken, quoteTokenPriceUsd) => {
+  const totalLiquidity = new BigNumber(lpTotalInQuoteToken).times(quoteTokenPriceUsd)
+  return totalLiquidity.isNaN() || !totalLiquidity.isFinite() ? 0 : totalLiquidity.toNumber()
+}
+
+const getPoolApr = (poolWeight, niniPriceUsd, poolLiquidityUsd) => {
+  const yearlyNiniRewardAllocation = NINI_PER_BLOCK.times(BLOCKS_PER_YEAR).times(poolWeight)
+  const apr = yearlyNiniRewardAllocation.times(niniPriceUsd).div(poolLiquidityUsd).times(100)
+  return apr.isNaN() || !apr.isFinite() ? 0 : apr.toNumber()
+}
 
 export function fetchPoolBalances(data) {
   return dispatch => {
@@ -23,66 +37,103 @@ export function fetchPoolBalances(data) {
 
     const promise = new Promise((resolve, reject) => {
       const { address, web3, pools } = data;
-      const earnPools = pools.filter(pool => pool.earnContractAddress);
+      // earnContractAddress === Masterchef
+      const earnPools = pools.filter(pool => pool.farm.earnContractAddress);
 
       const tokenCalls = earnPools.map(pool => {
-        const contract = new web3.eth.Contract(erc20ABI, pool.tokenAddress || getNetworkTokenShim());
-
+        const contract = new web3.eth.Contract(erc20ABI, pool.quoteTokenAddress);
         return {
-          allowance: contract.methods.allowance(address, pool.earnContractAddress)
+          quoteTokenBalanceLP: contract.methods.balanceOf(pool.lpTokenAddress)
+        }
+      })
+      
+      const lpTokenCalls = earnPools.map(pool => {
+        const contract = new web3.eth.Contract(erc20ABI, pool.lpTokenAddress);
+        return {
+          allowance: contract.methods.allowance(address, pool.farm.earnContractAddress),
+          lpTokenBalanceMC: contract.methods.balanceOf(pool.farm.earnContractAddress),
+          lpTotalSupply: contract.methods.totalSupply(),
         }
       });
+
+      // Calling to the Masterchef contract
+      const masterchefContract = new web3.eth.Contract(earnContractABI, Address.MASTERCHEF_ADDRESS);
+      const totalAllocPointCall = [{ totalAllocPoint: masterchefContract.methods.totalAllocPoint() }]
 
       const vaultCalls = earnPools.map(pool => {
-        let pricePerShareCall;
-
-        // Calculate price per share from total supply for Bigfiit BNB bank
-        if (pool.earnContractAddress == '0xA96C90223e4cC69192A9ffF1BA4c8b86D02765B2') {
-          const contract = new web3.eth.Contract(bigfootBnbBankABI, pool.earnContractAddress);
-
-          return {
-            totalBNB: contract.methods.totalBNB(),
-            totalSupply: contract.methods.totalSupply()
-          }
-        }
-
-        // Using a separate method for E11 token
-        if (pool.earnContractAddress == '0x3Ed531BfB3FAD41111f6dab567b33C4db897f991') {
-          const contract = new web3.eth.Contract([{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"owner","type":"address"},{"indexed":true,"internalType":"address","name":"spender","type":"address"},{"indexed":false,"internalType":"uint256","name":"value","type":"uint256"}],"name":"Approval","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"from","type":"address"},{"indexed":true,"internalType":"address","name":"to","type":"address"},{"indexed":false,"internalType":"uint256","name":"value","type":"uint256"}],"name":"Transfer","type":"event"},{"inputs":[{"internalType":"address","name":"owner","type":"address"},{"internalType":"address","name":"spender","type":"address"}],"name":"allowance","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"spender","type":"address"},{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"approve","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"account","type":"address"}],"name":"balanceOf","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"decimals","outputs":[{"internalType":"uint8","name":"","type":"uint8"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"spender","type":"address"},{"internalType":"uint256","name":"subtractedValue","type":"uint256"}],"name":"decreaseAllowance","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"spender","type":"address"},{"internalType":"uint256","name":"addedValue","type":"uint256"}],"name":"increaseAllowance","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"name","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"_amount","type":"uint256"}],"name":"shareToTokens","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"sharesPerToken","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"_amount","type":"uint256"}],"name":"stake","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"symbol","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"_amount","type":"uint256"}],"name":"tokenToShares","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"tokensPerShare","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"totalElevenFunds","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"totalSupply","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"recipient","type":"address"},{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"transfer","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"sender","type":"address"},{"internalType":"address","name":"recipient","type":"address"},{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"transferFrom","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"_amount","type":"uint256"}],"name":"unstake","outputs":[],"stateMutability":"nonpayable","type":"function"}], pool.earnContractAddress);
-          pricePerShareCall = contract.methods.tokensPerShare();
-        } else {
-          const contract = new web3.eth.Contract(earnContractABI, pool.earnContractAddress);
-          pricePerShareCall = contract.methods.getPricePerFullShare();
-        }
-
-        return {
-          pricePerShare: pricePerShareCall
-        }
+        const contract = new web3.eth.Contract(earnContractABI, pool.farm.earnContractAddress);
+        // poolInfo => [lpToken, allocPoint, lastRewardBlock, accNiniPerShare, depositFeeBP, harvestInterval]
+        const poolInfo = contract.methods.poolInfo(pool.id);
+        return { poolInfo }
       });
 
+      const amountIn = new BigNumber(10).exponentiatedBy(18).toString();
+      const routerContract = new web3.eth.Contract(pancakeRouterAbi, Address.PANCAKE_ROUTER_ADDRESS)
+      const niniPriceCall = [{
+          niniTokenPriceUsd: routerContract.methods.getAmountsOut(amountIn, [
+            Address.NINI_TOKEN_ADDRESS,
+            Address.WAVAX_TOKEN_ADDRESS,
+          ]),
+        }];
+
+      const priceCalls = earnPools.map(pool => {
+        const contract = new web3.eth.Contract(pancakeRouterAbi, Address.PANCAKE_ROUTER_ADDRESS);
+        const path = [pool.quoteTokenAddress, pool.tokenAddress]
+        const quoteTokenPriceUsd = contract.methods.getAmountsOut(amountIn, path)
+
+        return { quoteTokenPriceUsd }
+      })
+
       const multicall = new MultiCall(web3, getNetworkMulticall());
-      multicall.all([tokenCalls, vaultCalls])
+      multicall.all([tokenCalls, lpTokenCalls, totalAllocPointCall, vaultCalls, niniPriceCall, priceCalls])
         .then(data => {
           const poolsData = {};
 
           pools.map(pool => {
             let allowance = 0;
             let pricePerFullShare = 1;
+            let multiplier = 0;
+            let totalLiquidity = 0;
+            let apr = 0;
 
             const callIndex = earnPools.findIndex(earnPool => earnPool.id == pool.id);
             if (callIndex >= 0) {
-              allowance = new BigNumber(data[0][callIndex].allowance).toNumber();
+              /* tokenCalls */
+              // Balance of quote token on LP contract
+              const quoteTokenBalanceLP = new BigNumber(data[0][callIndex].quoteTokenBalanceLP);
 
-              if (pool.earnContractAddress == '0xA96C90223e4cC69192A9ffF1BA4c8b86D02765B2') {
-                // Calculate price per share from total supply for Bigfoot BNB Bank
-                pricePerFullShare = (new BigNumber(data[1][callIndex].totalBNB)).div(new BigNumber(data[1][callIndex].totalSupply));
-              } else {
-                const multiplier = pool.earnContractAddress == '0x3Ed531BfB3FAD41111f6dab567b33C4db897f991' ? 1e6 : 1;
-                pricePerFullShare = byDecimals(data[1][callIndex].pricePerShare * multiplier, 18).toNumber() || 1;
-              }
+              /* lpTokenCalls */
+              // Balance of LP tokens in the master chef contract
+              const lpTokenBalanceMC = new BigNumber(data[1][callIndex].lpTokenBalanceMC);
+              // Total supply of LP tokens
+              const lpTotalSupply = new BigNumber(data[1][callIndex].lpTotalSupply);
+              // Ratio in % a LP tokens that are in staking, vs the total number in circulation
+              const lpTokenRatio = lpTokenBalanceMC.div(lpTotalSupply).toNumber()
+              // Total value in staking in quote token value
+              const lpTotalInQuoteToken = new BigNumber(quoteTokenBalanceLP)
+              .div(DEFAULT_TOKEN_DECIMAL)
+              .times(new BigNumber(2))
+              .times(lpTokenRatio)
+              allowance = new BigNumber(data[1][callIndex].allowance).toNumber();
+
+              /* totalAllocPointCall */
+              const totalAllocPoint = new BigNumber(data[2][0].totalAllocPoint).toNumber();
+
+              /* vaultCalls */
+              pricePerFullShare = byDecimals(data[3][callIndex].poolInfo[3], 18).toNumber() || 1;
+              const allocPoint = new BigNumber(data[3][callIndex].poolInfo[1])
+              multiplier = allocPoint.div(100).toNumber();
+              const poolWeight = allocPoint.div(new BigNumber(totalAllocPoint))
+
+              /* niniPriceCall */
+              const niniTokenPriceUsd = new BigNumber(data[4][0].niniTokenPriceUsd)
+
+              /* priceCalls */
+              const quoteTokenPriceUsd = new BigNumber(data[5][callIndex].quoteTokenPriceUsd)
+              totalLiquidity = getTotalLiquidity(lpTotalInQuoteToken, quoteTokenPriceUsd)
+              apr = getPoolApr(poolWeight, niniTokenPriceUsd, totalLiquidity)
             }
-
-            poolsData[pool.id] = { allowance, pricePerFullShare }
+            poolsData[pool.id] = { allowance, pricePerFullShare, multiplier, totalLiquidity, apr }
           })
 
           dispatch({
@@ -152,11 +203,14 @@ export function reducer(state, action) {
           return pool;
         }
 
-        const { allowance, pricePerFullShare } = action.data[pool.id];
+        const { allowance, pricePerFullShare, multiplier, totalLiquidity, apr } = action.data[pool.id];
         return {
           ...pool,
           allowance,
-          pricePerFullShare
+          pricePerFullShare,
+          multiplier,
+          totalLiquidity,
+          apr
         }
       });
 

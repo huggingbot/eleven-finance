@@ -1,3 +1,5 @@
+import { Address } from './addresses'
+
 export const categories = [
   {
     name: 'Bigfoot',
@@ -38,9 +40,11 @@ export const categories = [
 // earnContractAddress: '池子合约地址',
 // price ： 挖的代币的价格！
 // path price:
+
+// Testnet
 export const pools = [
   {
-    id: 'niniavax',
+    id: 0,
     name: 'NINI-AVAX LP',
     token: 'NINI-AVAX LP',
     tokenDescription: 'NINI-AVAX LP',
@@ -51,18 +55,20 @@ export const pools = [
     tokenDescriptionUrl: '',
     tokenDescriptionUrl2: '',
     earnedToken: 'NINI',
-    earnedTokenAddress: '0x28C4d63fa665ECf203fF8525D9a52DeEE8c61c6e', // Nini token adress
+    earnedTokenAddress: Address.NINI_TOKEN_ADDRESS,
     defaultApy: "39.54",
     pricePerFullShare: 1,
     pastPricePerFullShare: 1,
-    tokenAddress: '0xac5F2951b6e2A022B061e6F68Ddc0EA61Ec18adF', // Lp token address
+    lpTokenAddress: '0xac5F2951b6e2A022B061e6F68Ddc0EA61Ec18adF', // Lp token address
+    tokenAddress: Address.NINI_TOKEN_ADDRESS,
+    quoteTokenAddress: Address.WAVAX_TOKEN_ADDRESS,
     categories: ['Pancake'],
 
     farm: {
       earnedToken: 'NINI',
       earnedTokenDecimals: 18,
-      earnedTokenAddress: '0x28C4d63fa665ECf203fF8525D9a52DeEE8c61c6e', // Nini token adress
-      earnContractAddress: '0x69a96aBa8d8C7F6eE3FD2a9cc20676E8c2e727A6', // Masterchef adress
+      earnedTokenAddress: Address.NINI_TOKEN_ADDRESS,
+      earnContractAddress: Address.MASTERCHEF_ADDRESS,
       masterchefPid: 0
     }
   },
@@ -82,7 +88,7 @@ export const pools = [
   //   defaultApy: "39.54",
   //   pricePerFullShare: 1,
   //   pastPricePerFullShare: 1,
-  //   tokenAddress: '0xa9338126a645aca52aa74ce65fbc1092eb67d335',
+  //   lpTokenAddress: '0xa9338126a645aca52aa74ce65fbc1092eb67d335',
   //   categories: ['Pancake'],
 
   //   farm: {

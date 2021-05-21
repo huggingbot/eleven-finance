@@ -65,7 +65,6 @@ export default function App({ children }) {
 
   useEffect(() => {
     if (web3 && address && !connectWalletPending && networkId && Boolean(networkId !== Number(process.env.NETWORK_ID))) {
-      console.log('networkId', networkId)
       alert(t('App-SnackBarText'))
     }
   }, [web3, address, networkId])

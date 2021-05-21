@@ -1,16 +1,16 @@
 export const COLORS = {
-  primary: '#FEBF32',
-  primaryContrast: '#1B1717',
-  primaryOpaque: 'rgba(254, 191, 50, 0.2)',
+  primary: '#6E451C',
+  primaryContrast: '#FFFFFF',
+  primaryOpaque: '#E7C485',
 
-  textMain: '#ffffff',
-  textHeader: '#FCFCFC',
-  textLight: '#EEEEEE',
-  textSecondaryLight: '#B5B7BF',
+  textMain: '#000000',
+  textHeader: '#000000',
+  textLight: 'rgba(0, 0, 0, 0.6)',
+  textSecondaryLight: '#000000',
   textSecondaryDark: '#93959C',
 
-  bgDark: '#1D1E24',
-  bgSurface: '#23262B',
+  bgDark: '#FFFFFF',
+  bgSurface: '#EFD9B4',
   bgLight: '#30323B',
   bgOverlay: 'rgba(16, 20, 26, 0.7)',
 

@@ -85,7 +85,7 @@ const PoolSummary = ({ pool, tokenBalance, depositedBalance, fetchBalanceDone, o
           </div>
         </div>
 
-        <div className={classes.counter}>
+        {/* <div className={classes.counter}>
           <p>
             { fetchBalanceDone
               ? formatDecimals(tokenBalance)
@@ -101,21 +101,35 @@ const PoolSummary = ({ pool, tokenBalance, depositedBalance, fetchBalanceDone, o
               : (<Loader />)}
           </p>
           <p>Deposited</p>
+        </div> */}
+
+        <div className={classes.counter}>
+          {typeof pool.apr === 'undefined'
+            ? <Loader />
+            : <p>{ pool.apr }%</p>
+          }
+          <p>APR</p>
         </div>
 
         <div className={classes.counter}>
-          <p>{ getApy(pool) }%</p>
-          <p>{ isCompounding ? 'APY' : 'APR' }</p>
+          {typeof pool.totalLiquidity === 'undefined'
+            ? <Loader />
+            : <p>${ pool.totalLiquidity }</p>
+          }
+          <p>Liquidity</p>
         </div>
 
         <div className={classes.counter}>
-          <p>{ getAprd(pool) }%</p>
-          <p>APRD</p>
+          {typeof pool.apr === 'undefined'
+            ? <Loader />
+            : <p>{pool.multiplier}x</p>
+          }
+          <p>Multiplier</p>
         </div>
 
         <div className={classes.counter}>
-          <p>{ pool.tvl ? '$' + millify(pool.tvl, { units }) : '-' }</p>
-          <p>TVL</p>
+          {/* <p>{ pool.tvl ? '$' + millify(pool.tvl, { units }) : '-' }</p>
+          <p>TVL</p> */}
         </div>
       </div>
     </>

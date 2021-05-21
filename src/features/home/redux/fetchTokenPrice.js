@@ -5,14 +5,12 @@ import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { fetchPancakeOutputAmount } from '../../web3';
 
 import { HOME_FETCH_TOKEN_PRICE_SUCCESS } from './constants';
+import { Address } from '../../configure'
+
 
 export function fetchTokenPrice({ web3 }) {
   return dispatch => {
-    const path = [
-      '0x28C4d63fa665ECf203fF8525D9a52DeEE8c61c6e', // NINI
-      '0x1D308089a2D1Ced3f1Ce36B1FcaF815b07217be3', // WAVAX
-      '0x078126a917DBD76EdB31B5B7F8E1e735946Ece3d', // USDT
-    ]
+    const path = [Address.NINI_TOKEN_ADDRESS, Address.WAVAX_TOKEN_ADDRESS, /* Address.USDT_TOKEN_ADDRESS */]
 
     const amountIn = new BigNumber(10).exponentiatedBy(18).toString();
 

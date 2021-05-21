@@ -3,7 +3,7 @@ import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import async from 'async';
 
 import { byDecimals } from 'features/helpers/bignumber';
-import { fetchPendingEle, fetchPendingReward } from '../../web3';
+import { fetchPendingNini, fetchPendingReward } from '../../web3';
 
 import {
   VAULT_FETCH_POOL_REWARDS_BEGIN,
@@ -23,58 +23,22 @@ export function fetchPoolRewards({ address, web3, pool }) {
 
       const requests = [];
 
-      if (pool.claimable) {
-        const { earnContractAddress } = pool;
+      const { earnContractAddress, masterchefPid } = pool.farm;
 
-        // Get pending ELE reward
-        requests.push(
-          (callbackInner) => {
-            const tokenName = 'Eleven';
-
-            fetchPendingReward({
-              web3,
-              address,
-              earnContractAddress,
-              tokenName
-            })
-              .then(data => callbackInner(null, data))
-              .catch(error => callbackInner(error.message || error))
-          }
-        );
-
-        // Get pending 11-token reward
-        requests.push(
-          (callbackInner) => {
-            const tokenName = pool.claimableRewardMethod;
-
-            fetchPendingReward({
-              web3,
-              address,
-              earnContractAddress,
-              tokenName
-            })
-              .then(data => callbackInner(null, data))
-              .catch(error => callbackInner(error.message || error))
-          }
-        );
-      } else {
-        const { earnContractAddress, masterchefPid } = pool.farm;
-
-        // Get farm pending ELE reward
-        requests.push(
-          (callbackInner) => {
-            fetchPendingEle({
-              web3,
-              address,
-              earnContractAddress,
-              masterchefPid
-            })
-              .then(data => callbackInner(null, data))
-              .catch(error => callbackInner(error.message || error))
-          },
-        );
-      }
-
+      // Get farm pending NINI reward
+      requests.push(
+        (callbackInner) => {
+          fetchPendingNini({
+            web3,
+            address,
+            earnContractAddress,
+            masterchefPid
+          })
+            .then(data => callbackInner(null, data))
+            .catch(error => callbackInner(error.message || error))
+        },
+      );
+      
       async.parallel(requests, (error, data) => {
         if (error) {
           dispatch({
@@ -84,11 +48,9 @@ export function fetchPoolRewards({ address, web3, pool }) {
 
           return reject(error.message || error)
         }
+        console.log('data', data)
 
         const poolRewards = {
-          pendingEle: data[0]
-            ? byDecimals(data[0], 18)
-            : null,
           pendingToken: pool.claimable && data[1]
             ? byDecimals(data[1], tokenDecimals)
             : null,

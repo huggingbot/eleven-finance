@@ -97,10 +97,10 @@ const styles = {
     padding: '6px 16px',
     marginBottom: 10,
 
-    background: COLORS.bgLight,
+    background: COLORS.primary,
     borderRadius: BORDER.radius,
 
-    color: COLORS.textLight,
+    color: COLORS.primaryContrast,
     fontSize: FONT.size.small,
     lineHeight: '20px',
 
