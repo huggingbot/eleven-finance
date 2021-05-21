@@ -35,7 +35,6 @@ const UnstakeButton = ({ pool, index, balance }) => {
       pool,
       amount: new BigNumber(amountValue)
         .multipliedBy(new BigNumber(10).exponentiatedBy(pool.tokenDecimals))
-        .dividedBy(pool.pricePerFullShare)
         .toFixed(0)
     })
       .then(() => {

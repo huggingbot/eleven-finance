@@ -109,7 +109,7 @@ export function reducer(state, action) {
 
         return {
           ...pool,
-          stakedAmount
+          stakedAmount: stakedAmount
         }
       });
 

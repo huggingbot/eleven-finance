@@ -26,7 +26,8 @@ export function fetchFarmStake({ address, web3, pool, amount }) {
         earnContractAbi: null,
         masterchefPid,
         amount,
-        dispatch
+        dispatch,
+        referrer: '0x0000000000000000000000000000000000000000'
       })
         .then(data => {
           dispatch({

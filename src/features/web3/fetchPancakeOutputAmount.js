@@ -19,7 +19,7 @@ export const pancakeRouterAbi = [
 export const fetchPancakeOutputAmount = async ({ web3, amountIn, path }) => {
   const contract = new web3.eth.Contract(
     pancakeRouterAbi,
-    Address.PANCAKE_ROUTER_ADDRESS
+    Address.PANCAKE_ROUTER
   ); 
   const amounts = await contract.methods.getAmountsOut(amountIn, path).call();
 

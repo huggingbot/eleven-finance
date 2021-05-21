@@ -10,7 +10,7 @@ import { Address } from '../../configure'
 
 export function fetchTokenPrice({ web3 }) {
   return dispatch => {
-    const path = [Address.NINI_TOKEN_ADDRESS, Address.WAVAX_TOKEN_ADDRESS, /* Address.USDT_TOKEN_ADDRESS */]
+    const path = [Address.NINI_TOKEN, Address.WAVAX_TOKEN, /* Address.USDT_TOKEN */]
 
     const amountIn = new BigNumber(10).exponentiatedBy(18).toString();
 

@@ -1,15 +1,15 @@
 import { pool4Abi } from '../configure/abi';
 import { enqueueSnackbar } from '../common/redux/actions';
 
-export const farmStake = async ({ web3, address, earnContractAddress, earnContractAbi, masterchefPid, amount, dispatch }) => {
+export const farmStake = async ({ web3, address, earnContractAddress, earnContractAbi, masterchefPid, amount, dispatch, referrer }) => {
   const contract = new web3.eth.Contract(earnContractAbi || pool4Abi, earnContractAddress);
-  const data = await _stake({ contract, address, masterchefPid, amount, dispatch });
+  const data = await _stake({ contract, address, masterchefPid, amount, dispatch, referrer });
   return data;
 };
 
-const _stake = ({ contract, address, masterchefPid, amount, dispatch }) => {
+const _stake = ({ contract, address, masterchefPid, amount, dispatch, referrer }) => {
   return new Promise((resolve, reject) => {
-    contract.methods.deposit(masterchefPid, amount).send({ from: address })
+    contract.methods.deposit(masterchefPid, amount, referrer).send({ from: address })
       .on('transactionHash', hash => {
         dispatch(
           enqueueSnackbar({

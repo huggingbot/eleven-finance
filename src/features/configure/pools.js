@@ -55,20 +55,20 @@ export const pools = [
     tokenDescriptionUrl: '',
     tokenDescriptionUrl2: '',
     earnedToken: 'NINI',
-    earnedTokenAddress: Address.NINI_TOKEN_ADDRESS,
+    earnedTokenAddress: Address.NINI_TOKEN,
     defaultApy: "39.54",
     pricePerFullShare: 1,
     pastPricePerFullShare: 1,
-    lpTokenAddress: '0x33660f7b3bb56fcf47e517e8cce7f958189a96fc', // Lp token address
-    tokenAddress: Address.NINI_TOKEN_ADDRESS,
-    quoteTokenAddress: Address.WAVAX_TOKEN_ADDRESS,
+    lpTokenAddress: Address.NINI_AVAX_LP,
+    tokenAddress: Address.NINI_TOKEN,
+    quoteTokenAddress: Address.WAVAX_TOKEN,
     categories: ['Pancake'],
 
     farm: {
       earnedToken: 'NINI',
       earnedTokenDecimals: 18,
-      earnedTokenAddress: Address.NINI_TOKEN_ADDRESS,
-      earnContractAddress: Address.MASTERCHEF_ADDRESS,
+      earnedTokenAddress: Address.NINI_TOKEN,
+      earnContractAddress: Address.MASTERCHEF,
       masterchefPid: 0
     }
   },

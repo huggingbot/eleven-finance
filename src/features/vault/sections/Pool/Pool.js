@@ -31,7 +31,7 @@ const Pool = ({ pool, index, tokens, fetchBalancesDone, fetchPoolDataDone }) => 
       //   ? byDecimals(tokens[pool.earnedToken].tokenBalance, pool.itokenDecimals).times(pool.pricePerFullShare)
       //   : new BigNumber(0);
 
-      const stakedBalance = (pool.stakedAmount || new BigNumber(0)).times(pool.pricePerFullShare);
+      const stakedBalance = (pool.stakedAmount || new BigNumber(0))
 
       // setDepositedBalance(depositedBalance);
       setStakedBalance(stakedBalance);

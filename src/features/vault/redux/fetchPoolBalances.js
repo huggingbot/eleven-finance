@@ -57,7 +57,7 @@ export function fetchPoolBalances(data) {
       });
 
       // Calling to the Masterchef contract
-      const masterchefContract = new web3.eth.Contract(earnContractABI, Address.MASTERCHEF_ADDRESS);
+      const masterchefContract = new web3.eth.Contract(earnContractABI, Address.MASTERCHEF);
       const totalAllocPointCall = [{ totalAllocPoint: masterchefContract.methods.totalAllocPoint() }]
 
       const vaultCalls = earnPools.map(pool => {
@@ -68,16 +68,16 @@ export function fetchPoolBalances(data) {
       });
 
       const amountIn = new BigNumber(10).exponentiatedBy(18).toString();
-      const routerContract = new web3.eth.Contract(pancakeRouterAbi, Address.PANCAKE_ROUTER_ADDRESS)
+      const routerContract = new web3.eth.Contract(pancakeRouterAbi, Address.PANCAKE_ROUTER)
       const niniPriceCall = [{
           niniTokenPriceUsd: routerContract.methods.getAmountsOut(amountIn, [
-            Address.NINI_TOKEN_ADDRESS,
-            Address.WAVAX_TOKEN_ADDRESS,
+            Address.NINI_TOKEN,
+            Address.WAVAX_TOKEN,
           ]),
         }];
 
       const priceCalls = earnPools.map(pool => {
-        const contract = new web3.eth.Contract(pancakeRouterAbi, Address.PANCAKE_ROUTER_ADDRESS);
+        const contract = new web3.eth.Contract(pancakeRouterAbi, Address.PANCAKE_ROUTER);
         const path = [pool.quoteTokenAddress, pool.tokenAddress]
         const quoteTokenPriceUsd = contract.methods.getAmountsOut(amountIn, path)
 

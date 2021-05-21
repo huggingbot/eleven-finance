@@ -56,7 +56,6 @@ const StakeButton = ({ pool, index, balance }) => {
 
     const amount = new BigNumber(stakeAmount.replace(',', ''))
         .multipliedBy(new BigNumber(10).exponentiatedBy(pool.tokenDecimals))
-        .dividedBy(pool.pricePerFullShare)
         .toFixed(0);
 
     fetchFarmStake({ address, web3, pool, amount })
