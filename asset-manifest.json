@@ -1,28 +1,28 @@
 {
   "files": {
-    "main.css": "/paniniswap/static/css/main.2e5a752b.chunk.css",
-    "main.js": "/paniniswap/static/js/main.0dc7e267.chunk.js",
-    "main.js.map": "/paniniswap/static/js/main.0dc7e267.chunk.js.map",
-    "runtime-main.js": "/paniniswap/static/js/runtime-main.3432e190.js",
-    "runtime-main.js.map": "/paniniswap/static/js/runtime-main.3432e190.js.map",
-    "static/js/2.a68ef3ee.chunk.js": "/paniniswap/static/js/2.a68ef3ee.chunk.js",
-    "static/js/2.a68ef3ee.chunk.js.map": "/paniniswap/static/js/2.a68ef3ee.chunk.js.map",
-    "index.html": "/paniniswap/index.html",
-    "precache-manifest.0d1c29d9b1567ad1379e838bf95cae86.js": "/paniniswap/precache-manifest.0d1c29d9b1567ad1379e838bf95cae86.js",
-    "service-worker.js": "/paniniswap/service-worker.js",
-    "static/css/main.2e5a752b.chunk.css.map": "/paniniswap/static/css/main.2e5a752b.chunk.css.map",
-    "static/js/2.a68ef3ee.chunk.js.LICENSE.txt": "/paniniswap/static/js/2.a68ef3ee.chunk.js.LICENSE.txt",
-    "static/media/11-logo.png": "/paniniswap/static/media/11-logo.a95ba926.png",
-    "static/media/ELE-logo.svg": "/paniniswap/static/media/ELE-logo.387d8122.svg",
-    "static/media/NINI-AVAX LP-logo.svg": "/paniniswap/static/media/NINI-AVAX LP-logo.34f25f68.svg",
-    "static/media/NINI-logo.png": "/paniniswap/static/media/NINI-logo.a95ba926.png",
-    "static/media/WorkSans-VariableFont_wght.ttf": "/paniniswap/static/media/WorkSans-VariableFont_wght.b2439691.ttf",
-    "static/media/clint-mckoy.jpg": "/paniniswap/static/media/clint-mckoy.9f17b8f6.jpg"
+    "main.css": "/eleven-finance/static/css/main.2e5a752b.chunk.css",
+    "main.js": "/eleven-finance/static/js/main.c41a9449.chunk.js",
+    "main.js.map": "/eleven-finance/static/js/main.c41a9449.chunk.js.map",
+    "runtime-main.js": "/eleven-finance/static/js/runtime-main.895e97cd.js",
+    "runtime-main.js.map": "/eleven-finance/static/js/runtime-main.895e97cd.js.map",
+    "static/js/2.ea01a0d1.chunk.js": "/eleven-finance/static/js/2.ea01a0d1.chunk.js",
+    "static/js/2.ea01a0d1.chunk.js.map": "/eleven-finance/static/js/2.ea01a0d1.chunk.js.map",
+    "index.html": "/eleven-finance/index.html",
+    "precache-manifest.3349b5267ce3090d1988ad10c4ca7947.js": "/eleven-finance/precache-manifest.3349b5267ce3090d1988ad10c4ca7947.js",
+    "service-worker.js": "/eleven-finance/service-worker.js",
+    "static/css/main.2e5a752b.chunk.css.map": "/eleven-finance/static/css/main.2e5a752b.chunk.css.map",
+    "static/js/2.ea01a0d1.chunk.js.LICENSE.txt": "/eleven-finance/static/js/2.ea01a0d1.chunk.js.LICENSE.txt",
+    "static/media/11-logo.png": "/eleven-finance/static/media/11-logo.a95ba926.png",
+    "static/media/ELE-logo.svg": "/eleven-finance/static/media/ELE-logo.387d8122.svg",
+    "static/media/NINI-AVAX LP-logo.svg": "/eleven-finance/static/media/NINI-AVAX LP-logo.34f25f68.svg",
+    "static/media/NINI-logo.png": "/eleven-finance/static/media/NINI-logo.a95ba926.png",
+    "static/media/WorkSans-VariableFont_wght.ttf": "/eleven-finance/static/media/WorkSans-VariableFont_wght.b2439691.ttf",
+    "static/media/clint-mckoy.jpg": "/eleven-finance/static/media/clint-mckoy.9f17b8f6.jpg"
   },
   "entrypoints": [
-    "static/js/runtime-main.3432e190.js",
-    "static/js/2.a68ef3ee.chunk.js",
+    "static/js/runtime-main.895e97cd.js",
+    "static/js/2.ea01a0d1.chunk.js",
     "static/css/main.2e5a752b.chunk.css",
-    "static/js/main.0dc7e267.chunk.js"
+    "static/js/main.c41a9449.chunk.js"
   ]
 }
