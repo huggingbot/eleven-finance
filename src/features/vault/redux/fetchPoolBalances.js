@@ -93,6 +93,7 @@ export function fetchPoolBalances(data) {
             let allowance = 0;
             let pricePerFullShare = 1;
             let multiplier = 0;
+            let depositFee = 0;
             let totalLiquidity = 0;
             let apr = 0;
 
@@ -123,6 +124,7 @@ export function fetchPoolBalances(data) {
               pricePerFullShare = byDecimals(data[3][callIndex].poolInfo[3], 18).toNumber() || 1;
               const allocPoint = new BigNumber(data[3][callIndex].poolInfo[1])
               multiplier = allocPoint.div(100).toNumber();
+              depositFee = new BigNumber(data[3][callIndex].poolInfo[4]).div(100).toNumber()
               const poolWeight = allocPoint.div(new BigNumber(totalAllocPoint))
 
               /* niniPriceCall */
@@ -135,7 +137,8 @@ export function fetchPoolBalances(data) {
               totalLiquidity = getTotalLiquidity(lpTotalInQuoteToken, quoteTokenPriceUsd)
               apr = getPoolApr(poolWeight, niniTokenPriceUsd, totalLiquidity)
             }
-            poolsData[pool.id] = { allowance, pricePerFullShare, multiplier, totalLiquidity, apr }
+            console.log('depositFee', depositFee)
+            poolsData[pool.id] = { allowance, pricePerFullShare, multiplier, depositFee, totalLiquidity, apr }
           })
 
           dispatch({
@@ -205,12 +208,13 @@ export function reducer(state, action) {
           return pool;
         }
 
-        const { allowance, pricePerFullShare, multiplier, totalLiquidity, apr } = action.data[pool.id];
+        const { allowance, pricePerFullShare, multiplier, depositFee, totalLiquidity, apr } = action.data[pool.id];
         return {
           ...pool,
           allowance,
           pricePerFullShare,
           multiplier,
+          depositFee,
           totalLiquidity,
           apr
         }

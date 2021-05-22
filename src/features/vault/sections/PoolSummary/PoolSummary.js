@@ -121,6 +121,14 @@ const PoolSummary = ({ pool, tokenBalance, depositedBalance, fetchBalanceDone, o
         </div> */}
 
         <div className={classes.counter}>
+        {typeof pool.depositFee === 'undefined'
+            ? <Loader />
+            : <p>{pool.depositFee}%</p>
+          }
+          <p>Deposit Fee</p>
+        </div>
+
+        <div className={classes.counter}>
           {typeof pool.apr === 'undefined'
             ? <Loader />
             : <p>{parseToReadableNum(pool.apr)}%</p>
@@ -144,10 +152,6 @@ const PoolSummary = ({ pool, tokenBalance, depositedBalance, fetchBalanceDone, o
           <p>Multiplier</p>
         </div>
 
-        <div className={classes.counter}>
-          {/* <p>{ pool.tvl ? '$' + millify(pool.tvl, { units }) : '-' }</p>
-          <p>TVL</p> */}
-        </div>
       </div>
     </>
   );
