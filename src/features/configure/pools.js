@@ -72,6 +72,64 @@ export const pools = [
       masterchefPid: 0
     }
   },
+  {
+    id: 1,
+    name: 'DAI-AVAX LP',
+    token: 'DAI-AVAX LP',
+    tokenDescription: 'DAI-AVAX LP',
+    tokenDecimals: 18,
+    uses: '',
+    itokenDecimals: 18,
+    depostLimit: 0,
+    tokenDescriptionUrl: '',
+    tokenDescriptionUrl2: '',
+    earnedToken: 'NINI',
+    earnedTokenAddress: Address.NINI_TOKEN,
+    defaultApy: "39.54",
+    pricePerFullShare: 1,
+    pastPricePerFullShare: 1,
+    lpTokenAddress: Address.DAI_AVAX_LP,
+    tokenAddress: Address.DAI_TOKEN,
+    quoteTokenAddress: Address.WAVAX_TOKEN,
+    categories: ['Pancake'],
+
+    farm: {
+      earnedToken: 'NINI',
+      earnedTokenDecimals: 18,
+      earnedTokenAddress: Address.NINI_TOKEN,
+      earnContractAddress: Address.MASTERCHEF,
+      masterchefPid: 1
+    }
+  },
+  // {
+  //   id: 2,
+  //   name: 'NINI-DAI LP',
+  //   token: 'NINI-DAI LP',
+  //   tokenDescription: 'NINI-DAI LP',
+  //   tokenDecimals: 18,
+  //   uses: '',
+  //   itokenDecimals: 18,
+  //   depostLimit: 0,
+  //   tokenDescriptionUrl: '',
+  //   tokenDescriptionUrl2: '',
+  //   earnedToken: 'NINI',
+  //   earnedTokenAddress: Address.NINI_TOKEN,
+  //   defaultApy: "39.54",
+  //   pricePerFullShare: 1,
+  //   pastPricePerFullShare: 1,
+  //   lpTokenAddress: Address.NINI_DAI_LP,
+  //   tokenAddress: Address.NINI_TOKEN,
+  //   quoteTokenAddress: Address.DAI_TOKEN,
+  //   categories: ['Pancake'],
+
+  //   farm: {
+  //     earnedToken: 'NINI',
+  //     earnedTokenDecimals: 18,
+  //     earnedTokenAddress: Address.NINI_TOKEN,
+  //     earnContractAddress: Address.MASTERCHEF,
+  //     masterchefPid: 2
+  //   }
+  // },
   // {
   //   id: 'elebnb',
   //   name: 'ELE-BNB LP V2',
