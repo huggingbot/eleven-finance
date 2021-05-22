@@ -28,27 +28,33 @@ export function fetchFarmsStaked({ address, web3, pools }) {
         const { earnContractAddress, masterchefPid } = pool.farm;
 
         const contract = new web3.eth.Contract(pool4Abi, earnContractAddress);
-        return {
-          stakedAmount: contract.methods.userInfo(masterchefPid, address)
-        };
+
+        // userInfo => [amount, rewardDebt, rewardLockedUp, nextHarvestUntil]
+        const userInfo = contract.methods.userInfo(masterchefPid, address)
+        return { userInfo };
       });
 
       multicall
         .all([calls])
         .then(([results]) => {
           const stakedAmounts = {};
+          const nextHarvestUntil = {}
 
           pools.map(pool => {
             const callIndex = farmPools.findIndex(farmPool => farmPool.id == pool.id);
 
             stakedAmounts[pool.id] = callIndex >= 0
-              ? byDecimals(results[callIndex].stakedAmount[0], pool.farm.earnedTokenDecimals)
+              ? byDecimals(results[callIndex].userInfo[0], pool.farm.earnedTokenDecimals)
               : new BigNumber(0);
+
+            nextHarvestUntil[pool.id] = callIndex >= 0
+              ? results[callIndex].userInfo[3]
+              : new BigNumber(0)
           })
 
           dispatch({
             type: VAULT_FETCH_FARMS_STAKED_SUCCESS,
-            data: stakedAmounts,
+            data: { stakedAmounts, nextHarvestUntil },
           })
 
           resolve();
@@ -105,11 +111,13 @@ export function reducer(state, action) {
 
     case VAULT_FETCH_FARMS_STAKED_SUCCESS:
       const updatedPools = pools.map(pool => {
-        const stakedAmount = action.data[pool.id];
+        const stakedAmount = action.data.stakedAmounts[pool.id];
+        const nextHarvestUntil = action.data.nextHarvestUntil[pool.id];
 
         return {
           ...pool,
-          stakedAmount: stakedAmount
+          stakedAmount,
+          nextHarvestUntil,
         }
       });
 

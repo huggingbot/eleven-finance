@@ -137,7 +137,6 @@ export function fetchPoolBalances(data) {
               totalLiquidity = getTotalLiquidity(lpTotalInQuoteToken, quoteTokenPriceUsd)
               apr = getPoolApr(poolWeight, niniTokenPriceUsd, totalLiquidity)
             }
-            console.log('depositFee', depositFee)
             poolsData[pool.id] = { allowance, pricePerFullShare, multiplier, depositFee, totalLiquidity, apr }
           })
 

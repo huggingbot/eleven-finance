@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { createUseStyles } from 'react-jss';
 import { formatDecimals } from 'features/helpers/bignumber';
@@ -14,9 +14,35 @@ import Step from './Step/Step';
 import styles from './styles';
 const useStyles = createUseStyles(styles);
 
-const FarmOnly = ({ pool, index, tokenBalance, stakedBalance, pendingRewards, pendingRewardsLoaded }) => {
+const FarmOnly = ({ pool, index, tokenBalance, stakedBalance, nextHarvestUntil, pendingRewards, pendingRewardsLoaded }) => {
   const { t } = useTranslation();
   const classes = useStyles();
+
+  const [timeLeftUntilNextHarvest, setTimeLeftUntilNextHarvest] = useState('00:00:00')
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (!nextHarvestUntil) {
+        return
+      }
+      const timeLeft = nextHarvestUntil - Math.floor(Date.now() / 1000)
+      if (timeLeft < 0) {
+        return
+      }
+      const hours = Math.floor((timeLeft % (60 * 60 * 24)) / (60 * 60))
+      let fmtHours = hours.toString().length === 1 ? '0' + hours : String(hours)
+      fmtHours = fmtHours.includes('-') ? '00' : fmtHours
+      const minutes = Math.floor((timeLeft % (60 * 60)) / 60)
+      let fmtMinutes = minutes.toString().length === 1 ? '0' + minutes : String(minutes)
+      fmtMinutes = fmtMinutes.includes('-') ? '00' : fmtMinutes
+      const seconds = Math.floor(timeLeft % 60)
+      let fmtSeconds = seconds.toString().length === 1 ? '0' + seconds : String(seconds)
+      fmtSeconds = fmtSeconds.includes('-') ? '00' : fmtSeconds
+
+      setTimeLeftUntilNextHarvest(`${fmtHours}:${fmtMinutes}:${fmtSeconds}`)
+    }, 1000)
+    return () => clearInterval(interval)
+  }, [nextHarvestUntil])
 
   return (
     <>
@@ -72,7 +98,12 @@ const FarmOnly = ({ pool, index, tokenBalance, stakedBalance, pendingRewards, pe
             </div>
           </div>
 
-          <FarmClaimButton pool={pool} />
+          <>
+            <FarmClaimButton pool={pool} />
+            <div className={classes.timerSpace}>
+              {timeLeftUntilNextHarvest}
+            </div>
+          </>
         </div>
       </Grid>
     </>

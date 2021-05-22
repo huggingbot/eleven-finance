@@ -13,7 +13,7 @@ import FarmOnly from './Layouts/FarmOnly';
 import styles from './styles';
 const useStyles = createUseStyles(styles);
 
-const PoolDetails = ({ pool, index, tokenBalance, /* depositedBalance, */ stakedBalance }) => {
+const PoolDetails = ({ pool, index, tokenBalance, /* depositedBalance, */ stakedBalance, nextHarvestUntil }) => {
   const classes = useStyles();
 
   const { web3, address } = useConnectWallet();
@@ -48,6 +48,7 @@ const PoolDetails = ({ pool, index, tokenBalance, /* depositedBalance, */ staked
           index={index}
           tokenBalance={tokenBalance}
           stakedBalance={stakedBalance}
+          nextHarvestUntil={nextHarvestUntil}
           pendingRewards={pendingRewards[pool.id]}
           pendingRewardsLoaded={fetchPoolRewardsDone[pool.id]} />
       )}

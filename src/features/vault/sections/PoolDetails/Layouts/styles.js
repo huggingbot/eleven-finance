@@ -60,6 +60,10 @@ const styles = {
   balanceWithPadding: {
     padding: '12px 0'
   },
+  timerSpace: {
+    display: 'inline-block',
+    marginLeft: '12px'
+  }
 };
 
 export default styles;

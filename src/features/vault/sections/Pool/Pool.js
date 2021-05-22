@@ -17,6 +17,7 @@ const Pool = ({ pool, index, tokens, fetchBalancesDone, fetchPoolDataDone }) => 
   const [tokenBalance, setTokenBalance] = useState(new BigNumber(0));
   // const [depositedBalance, setDepositedBalance] = useState(new BigNumber(0));
   const [stakedBalance, setStakedBalance] = useState(new BigNumber(0));
+  const [nextHarvestUntil, setNextHarvestUntil] = useState(new BigNumber(0));
   // const [depositedAndStaked, setDepositedAndStaked] = useState(null);
 
   const toggleCard = useCallback(() => setIsOpen(!isOpen), [isOpen]);
@@ -31,10 +32,12 @@ const Pool = ({ pool, index, tokens, fetchBalancesDone, fetchPoolDataDone }) => 
       //   ? byDecimals(tokens[pool.earnedToken].tokenBalance, pool.itokenDecimals).times(pool.pricePerFullShare)
       //   : new BigNumber(0);
 
-      const stakedBalance = (pool.stakedAmount || new BigNumber(0))
+      const _stakedBalance = (pool.stakedAmount || new BigNumber(0))
+      const _nextHarvestUntil = (pool.nextHarvestUntil || new BigNumber(0))
 
       // setDepositedBalance(depositedBalance);
-      setStakedBalance(stakedBalance);
+      setStakedBalance(_stakedBalance);
+      setNextHarvestUntil(_nextHarvestUntil);
       // setDepositedAndStaked(depositedBalance.plus(stakedBalance));
     }
   }, [tokens, pool, fetchPoolDataDone])
@@ -64,6 +67,7 @@ const Pool = ({ pool, index, tokens, fetchBalancesDone, fetchPoolDataDone }) => 
           tokenBalance={tokenBalance}
           // depositedBalance={depositedBalance}
           stakedBalance={stakedBalance}
+          nextHarvestUntil={nextHarvestUntil}
         />
       </Transition>
     </div>
