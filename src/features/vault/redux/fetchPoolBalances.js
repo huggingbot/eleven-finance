@@ -73,12 +73,13 @@ export function fetchPoolBalances(data) {
           niniTokenPriceUsd: routerContract.methods.getAmountsOut(amountIn, [
             Address.NINI_TOKEN,
             Address.WAVAX_TOKEN,
+            Address.DAI_TOKEN,
           ]),
         }];
 
       const priceCalls = earnPools.map(pool => {
         const contract = new web3.eth.Contract(pancakeRouterAbi, Address.PANCAKE_ROUTER);
-        const path = [pool.quoteTokenAddress, pool.tokenAddress]
+        const path = [pool.quoteTokenAddress, Address.DAI_TOKEN]
         const quoteTokenPriceUsd = contract.methods.getAmountsOut(amountIn, path)
 
         return { quoteTokenPriceUsd }
@@ -128,12 +129,14 @@ export function fetchPoolBalances(data) {
               const poolWeight = allocPoint.div(new BigNumber(totalAllocPoint))
 
               /* niniPriceCall */
-              const rawNiniTokenPriceUsd = data[4][0].niniTokenPriceUsd
-              const niniTokenPriceUsd = new BigNumber(rawNiniTokenPriceUsd[rawNiniTokenPriceUsd.length - 1])
+              let rawNiniTokenPriceUsd = data[4][0].niniTokenPriceUsd
+              rawNiniTokenPriceUsd = new BigNumber(rawNiniTokenPriceUsd[rawNiniTokenPriceUsd.length - 1])
+              const niniTokenPriceUsd = rawNiniTokenPriceUsd.dividedBy(new BigNumber(10).exponentiatedBy(18))
 
               /* priceCalls */
-              const rawQuoteTokenPriceUsd = data[5][callIndex].quoteTokenPriceUsd
-              const quoteTokenPriceUsd = new BigNumber(rawQuoteTokenPriceUsd[rawQuoteTokenPriceUsd.length - 1])
+              let rawQuoteTokenPriceUsd = data[5][callIndex].quoteTokenPriceUsd
+              rawQuoteTokenPriceUsd = new BigNumber(rawQuoteTokenPriceUsd[rawQuoteTokenPriceUsd.length - 1])
+              const quoteTokenPriceUsd = rawQuoteTokenPriceUsd.dividedBy(new BigNumber(10).exponentiatedBy(18))
               totalLiquidity = getTotalLiquidity(lpTotalInQuoteToken, quoteTokenPriceUsd)
               apr = getPoolApr(poolWeight, niniTokenPriceUsd, totalLiquidity)
             }

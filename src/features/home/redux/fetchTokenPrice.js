@@ -10,12 +10,12 @@ import { Address } from '../../configure'
 
 export function fetchTokenPrice({ web3 }) {
   return dispatch => {
-    const path = [Address.NINI_TOKEN, Address.WAVAX_TOKEN, /* Address.USDT_TOKEN */]
+    const path = [Address.NINI_TOKEN, Address.WAVAX_TOKEN, Address.DAI_TOKEN]
 
     const amountIn = new BigNumber(10).exponentiatedBy(18).toString();
 
     fetchPancakeOutputAmount({ web3, amountIn, path})
-      .then(tokenPrice => {
+    .then(tokenPrice => {
         dispatch({
           type: HOME_FETCH_TOKEN_PRICE_SUCCESS,
           data: tokenPrice.dividedBy(new BigNumber(10).exponentiatedBy(18))
@@ -49,7 +49,6 @@ export function reducer(state, action) {
     case HOME_FETCH_TOKEN_PRICE_SUCCESS:
       return {
         ...state,
-
         tokenPriceUsd: action.data,
         fetchTokenPriceDone: true,
       }
