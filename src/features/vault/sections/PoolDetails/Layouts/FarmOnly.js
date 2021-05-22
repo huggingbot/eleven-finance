@@ -18,15 +18,15 @@ const FarmOnly = ({ pool, index, tokenBalance, stakedBalance, nextHarvestUntil, 
   const { t } = useTranslation();
   const classes = useStyles();
 
-  const [timeLeftUntilNextHarvest, setTimeLeftUntilNextHarvest] = useState('00:00:00')
+  const [timeLeftUntilNextHarvest, setTimeLeftUntilNextHarvest] = useState()
 
   useEffect(() => {
     const interval = setInterval(() => {
-      if (!nextHarvestUntil) {
+      if (typeof nextHarvestUntil === 'undefined') {
         return
       }
       const timeLeft = nextHarvestUntil - Math.floor(Date.now() / 1000)
-      if (timeLeft < 0) {
+      if (timeLeft < 0 && nextHarvestUntil === 0) {
         return
       }
       const hours = Math.floor((timeLeft % (60 * 60 * 24)) / (60 * 60))
@@ -100,8 +100,8 @@ const FarmOnly = ({ pool, index, tokenBalance, stakedBalance, nextHarvestUntil, 
 
           <>
             <FarmClaimButton pool={pool} />
-            <div className={classes.timerSpace}>
-              {timeLeftUntilNextHarvest}
+            <div className={classes.timer}>
+              {timeLeftUntilNextHarvest ?? <Loader/>}
             </div>
           </>
         </div>
