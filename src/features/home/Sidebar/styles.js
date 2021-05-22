@@ -155,7 +155,7 @@ const styles = {
 
   divider: {
     height: 2,
-    background: COLORS.bgLight,
+    background: COLORS.primary,
     margin: '20px 0',
 
     '&.small': {
