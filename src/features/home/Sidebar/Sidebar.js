@@ -96,7 +96,7 @@ const Sidebar = ({ connected, address, connectWallet, disconnectWallet }) => {
           {/* Logo */}
           <a href="#" className={classes.logo}>
             <img src={logo} />
-            NINISWAP
+            PANINISWAP
           </a>
 
           <div>

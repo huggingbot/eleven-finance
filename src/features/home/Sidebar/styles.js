@@ -78,15 +78,15 @@ const styles = {
     fontWeight: 'bold',
     fontSize: '18px',
     lineHeight: '24px',
-    color: COLORS.textMain,
+    color: COLORS.primary,
 
     '&:link, &:visited, &:hover, &:active': {
-      color: COLORS.textMain
+      color: COLORS.primary
     },
 
     '& img': {
-      width: 40,
-      height: 40,
+      width: 60,
+      height: 60,
       marginRight: 14
     }
   },
@@ -102,6 +102,7 @@ const styles = {
 
     color: COLORS.primaryContrast,
     fontSize: FONT.size.small,
+    fontWeight: 'bold',
     lineHeight: '20px',
 
     '& img': {
@@ -121,7 +122,7 @@ const styles = {
     right: 9,
 
     '&.connected': {
-      background: '#166E57'
+      background: '#3CB371'
     }
   },
 
@@ -184,7 +185,7 @@ const styles = {
     },
 
     '& a': {
-      color: COLORS.textLight,
+      color: COLORS.primary,
       fontSize: FONT.size.normal,
       fontWeight: 'bold',
       lineHeight: '22px'
@@ -243,14 +244,14 @@ const styles = {
   price: {
     minWidth: 100,
     paddingTop: 5,
-    color: COLORS.textMain,
+    color: COLORS.primary,
     fontSize: FONT.size.bigger,
     fontWeight: 'bold',
     lineHeight: '18px',
 
     '& img': {
-      width: 18,
-      height: 18,
+      width: 27,
+      height: 27,
       marginLeft: 3,
       marginRight: 8,
       marginTop: -3

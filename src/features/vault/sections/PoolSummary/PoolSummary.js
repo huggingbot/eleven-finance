@@ -106,7 +106,7 @@ const PoolSummary = ({ pool, tokenBalance, depositedBalance, fetchBalanceDone, o
         <div className={classes.counter}>
           {typeof pool.apr === 'undefined'
             ? <Loader />
-            : <p>{ pool.apr.toFixed(4) }%</p>
+            : <p>{ pool.apr.toFixed(3) }%</p>
           }
           <p>APR</p>
         </div>
@@ -114,7 +114,7 @@ const PoolSummary = ({ pool, tokenBalance, depositedBalance, fetchBalanceDone, o
         <div className={classes.counter}>
           {typeof pool.totalLiquidity === 'undefined'
             ? <Loader />
-            : <p>${ pool.totalLiquidity.toFixed(4) }</p>
+            : <p>${ pool.totalLiquidity.toFixed(3) }</p>
           }
           <p>Liquidity</p>
         </div>
