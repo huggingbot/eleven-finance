@@ -15,7 +15,7 @@ import {
 } from '@heroicons/react/outline'
 
 import logo from 'assets/img/logo.png';
-import bscLogo from 'assets/img/networks/binance.png';
+import bscLogo from 'assets/img/networks/avax.png';
 import twitterLogo from 'assets/img/socials/twitter.png';
 import telegramLogo from 'assets/img/socials/telegram.png';
 import mediumLogo from 'assets/img/socials/medium.png';
@@ -170,7 +170,7 @@ const Sidebar = ({ connected, address, connectWallet, disconnectWallet }) => {
             <a href="https://elevenfinance.medium.com/" target="_blank">
               <img src={mediumLogo} />
             </a>
-            <a href="https://github.com/Eleven-Finance" target="_blank">
+            <a href="https://github.com/paniniswap" target="_blank">
               <img src={githubLogo} />
             </a>
           </div>
