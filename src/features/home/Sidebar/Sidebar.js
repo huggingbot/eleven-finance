@@ -148,7 +148,7 @@ const Sidebar = ({ connected, address, connectWallet, disconnectWallet }) => {
             </div>
             <div>
               <a className={classes.buyButton}
-                href="https://exchange.pancakeswap.finance/#/swap?outputCurrency=0xacd7b3d9c10e97d0efa418903c0c7669e702e4c0"
+                href="https://app.pangolin.exchange/#/swap?outputCurrency=0x9C418b0afe5192a894Ad8D6947CaB8EAF363fEc8"
                 target="_blank"
               >
                 <ExternalLinkIcon />
