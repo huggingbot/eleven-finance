@@ -1,4 +1,5 @@
 import React from 'react';
+import BigNumber from 'bignumber.js';
 import { createUseStyles } from 'react-jss';
 import millify from 'millify';
 import { formatDecimals } from 'features/helpers/bignumber';
@@ -7,6 +8,22 @@ import Loader from 'components/Loader/Loader';
 
 import styles from './styles';
 const useStyles = createUseStyles(styles);
+
+const parseToReadableNum = (num) => {
+  // 10e1 === 100
+  if (num < 10e2) {
+    return num.toFixed(2)
+  } else if (num >= 10e2 && num < 10e5) {
+    return (num / 10e2).toFixed(2) + 'K'
+  } else if (num >= 10e5 && num < 10e8) {
+    return (num / 10e5).toFixed(2) + 'M'
+  } else if (num >= 10e8 && num < 10e11) {
+    return (num / 10e8).toFixed(2) + 'B'
+  } else {
+    return '∞'
+  }
+
+}
 
 const PoolSummary = ({ pool, tokenBalance, depositedBalance, fetchBalanceDone, onClick }) => {
   const classes = useStyles();
@@ -106,7 +123,7 @@ const PoolSummary = ({ pool, tokenBalance, depositedBalance, fetchBalanceDone, o
         <div className={classes.counter}>
           {typeof pool.apr === 'undefined'
             ? <Loader />
-            : <p>{ pool.apr.toFixed(3) }%</p>
+            : <p>{parseToReadableNum(pool.apr)}%</p>
           }
           <p>APR</p>
         </div>
@@ -114,7 +131,7 @@ const PoolSummary = ({ pool, tokenBalance, depositedBalance, fetchBalanceDone, o
         <div className={classes.counter}>
           {typeof pool.totalLiquidity === 'undefined'
             ? <Loader />
-            : <p>${ pool.totalLiquidity.toFixed(3) }</p>
+            : <p>${parseToReadableNum(pool.totalLiquidity)}</p>
           }
           <p>Liquidity</p>
         </div>
