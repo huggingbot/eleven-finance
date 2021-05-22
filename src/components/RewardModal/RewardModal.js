@@ -108,7 +108,7 @@ export default function RewardModal(props) {
 
                 <div className={classes.currencyContainer}>
                     <div className="avatarWrapper">
-                        <Avatar alt="ELEVEN" src={require(`../../images/11-logo.png`)} />
+                        {/* <Avatar alt="ELEVEN" src={require(`../../images/11-logo.png`)} /> */}
                     </div>
                     <p>0.00 (TBA)</p>
                 </div>

@@ -136,7 +136,7 @@ const styles = {
     fontSize: FONT.size.normal,
     fontWeight: 'bold',
     lineHeight: '20px',
-    textAlign: 'center',
+    textAlign: 'left',
 
     background: 'none',
     border: '1px solid',
