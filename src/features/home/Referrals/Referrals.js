@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { createUseStyles } from "react-jss";
-import { Link } from "react-router-dom";
 import Tippy from "@tippyjs/react";
 import { ClipboardCopyIcon } from "@heroicons/react/outline";
 import Loader from "components/Loader/Loader";
@@ -13,13 +12,13 @@ export default function Referrals() {
   const classes = useStyles();
   const { connected, address } = useConnectWallet();
 
-  const [referral, setReferral] = useState('');
+  const [referral, setReferral] = useState("");
   const { copy, copied, reset } = useCopy(referral);
   const { referralsCount, totalReferralCommissions } = useFetchReferrals();
 
   useEffect(() => {
     if (address) {
-      const base64address = Buffer.from(address).toString('base64')
+      const base64address = Buffer.from(address).toString("base64");
       setReferral(`${window.location.origin}/?ref=${base64address}`);
     }
   }, [address]);
@@ -59,13 +58,14 @@ export default function Referrals() {
           </Tippy>
         </div>
         <div className={classes.divider} />
-        <Link
+        <a
+          href={referral}
           className={classes.referralLinkBody}
-          to={{ to: referral, search: referral }}
           target="_blank"
+          rel="noopener noreferrer"
         >
           {referral}
-        </Link>
+        </a>
       </div>
     </div>
   );
