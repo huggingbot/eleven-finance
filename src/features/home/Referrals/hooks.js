@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import BigNumber from "bignumber.js";
 import { referralContractABI, Address } from "../../configure";
 import { MultiCall } from "eth-multicall";
 import { getNetworkMulticall } from "features/helpers/getNetworkData";
@@ -23,7 +24,10 @@ export const useCopy = (str) => {
 
 export function useFetchReferrals() {
   const { web3, address } = useConnectWallet();
-  const [referralInfo, setReferralInfo] = useState({ referralsCount: null, totalReferralCommissions: null });
+  const [referralInfo, setReferralInfo] = useState({
+    referralsCount: null,
+    totalReferralCommissions: null,
+  });
 
   useEffect(() => {
     if (web3 && address) {
@@ -44,7 +48,10 @@ export function useFetchReferrals() {
 
         setReferralInfo({
           referralsCount: data[0][0].referralsCount,
-          totalReferralCommissions: data[0][0].totalReferralCommissions,
+          totalReferralCommissions:
+            new BigNumber(data[0][0].totalReferralCommissions).dividedBy(
+              new BigNumber(10).exponentiatedBy(18)
+            ),
         });
       };
       fetchReferrals();
