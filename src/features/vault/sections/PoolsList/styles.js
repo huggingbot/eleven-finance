@@ -4,6 +4,7 @@ const styles = {
   ...commonStyles,
 
   pools: {
+    overflow: 'hidden',
     marginTop: 24,
 
     [MEDIA.mobile]: {

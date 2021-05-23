@@ -18,6 +18,7 @@ const styles = {
     }
   },
   wrapper: {
+    overflow: 'hidden',
     minHeight: '100vh',
     padding: '0 10px',
     textAlign: 'center',
