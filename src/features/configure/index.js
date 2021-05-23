@@ -16,6 +16,7 @@ export {
     balancerRewardsABI,
     governanceABI,
     pool4Abi,
+    referralContractABI,
 } from './abi';
 export { pools } from './pools';
 export { Address } from './addresses'

@@ -9,7 +9,7 @@ import {
   VAULT_FETCH_FARM_STAKE_FAILURE,
 } from './constants';
 
-export function fetchFarmStake({ address, web3, pool, amount }) {
+export function fetchFarmStake({ address, web3, pool, amount, refAddress }) {
   return dispatch => {
     dispatch({
       type: VAULT_FETCH_FARM_STAKE_BEGIN,
@@ -27,7 +27,7 @@ export function fetchFarmStake({ address, web3, pool, amount }) {
         masterchefPid,
         amount,
         dispatch,
-        referrer: '0x0000000000000000000000000000000000000000'
+        referrer: refAddress || '0x0000000000000000000000000000000000000000'
       })
         .then(data => {
           dispatch({

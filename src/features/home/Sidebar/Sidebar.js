@@ -80,9 +80,9 @@ const Sidebar = ({ connected, address, connectWallet, disconnectWallet }) => {
       }, {}))
 
       if (link === 'pools') {
-        history.push('/')
+        history.replace('/')
       } else {
-        history.push(`/${link}`)
+        history.replace(`/${link}`)
       }
   }, [])
   const onPoolsLinkClick = useCallback(onLinkClick('pools'), [onLinkClick])

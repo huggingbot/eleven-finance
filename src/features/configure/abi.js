@@ -7217,3 +7217,174 @@ export const vaultFarmAbi = [
     type: "function",
   },
 ];
+
+export const referralContractABI = [
+  {
+    type: "event",
+    name: "OperatorUpdated",
+    inputs: [
+      {
+        type: "address",
+        name: "operator",
+        internalType: "address",
+        indexed: true,
+      },
+      { type: "bool", name: "status", internalType: "bool", indexed: true },
+    ],
+    anonymous: false,
+  },
+  {
+    type: "event",
+    name: "OwnershipTransferred",
+    inputs: [
+      {
+        type: "address",
+        name: "previousOwner",
+        internalType: "address",
+        indexed: true,
+      },
+      {
+        type: "address",
+        name: "newOwner",
+        internalType: "address",
+        indexed: true,
+      },
+    ],
+    anonymous: false,
+  },
+  {
+    type: "event",
+    name: "ReferralCommissionRecorded",
+    inputs: [
+      {
+        type: "address",
+        name: "referrer",
+        internalType: "address",
+        indexed: true,
+      },
+      {
+        type: "uint256",
+        name: "commission",
+        internalType: "uint256",
+        indexed: false,
+      },
+    ],
+    anonymous: false,
+  },
+  {
+    type: "event",
+    name: "ReferralRecorded",
+    inputs: [
+      {
+        type: "address",
+        name: "user",
+        internalType: "address",
+        indexed: true,
+      },
+      {
+        type: "address",
+        name: "referrer",
+        internalType: "address",
+        indexed: true,
+      },
+    ],
+    anonymous: false,
+  },
+  {
+    type: "function",
+    stateMutability: "nonpayable",
+    outputs: [],
+    name: "drainERC20Token",
+    inputs: [
+      { type: "address", name: "_token", internalType: "contract IERC20" },
+      { type: "uint256", name: "_amount", internalType: "uint256" },
+      { type: "address", name: "_to", internalType: "address" },
+    ],
+  },
+  {
+    type: "function",
+    stateMutability: "view",
+    outputs: [{ type: "address", name: "", internalType: "address" }],
+    name: "getReferrer",
+    inputs: [{ type: "address", name: "_user", internalType: "address" }],
+  },
+  {
+    type: "function",
+    stateMutability: "view",
+    outputs: [{ type: "bool", name: "", internalType: "bool" }],
+    name: "operators",
+    inputs: [{ type: "address", name: "", internalType: "address" }],
+  },
+  {
+    type: "function",
+    stateMutability: "view",
+    outputs: [{ type: "address", name: "", internalType: "address" }],
+    name: "owner",
+    inputs: [],
+  },
+  {
+    type: "function",
+    stateMutability: "nonpayable",
+    outputs: [],
+    name: "recordReferral",
+    inputs: [
+      { type: "address", name: "_user", internalType: "address" },
+      { type: "address", name: "_referrer", internalType: "address" },
+    ],
+  },
+  {
+    type: "function",
+    stateMutability: "nonpayable",
+    outputs: [],
+    name: "recordReferralCommission",
+    inputs: [
+      { type: "address", name: "_referrer", internalType: "address" },
+      { type: "uint256", name: "_commission", internalType: "uint256" },
+    ],
+  },
+  {
+    type: "function",
+    stateMutability: "view",
+    outputs: [{ type: "uint256", name: "", internalType: "uint256" }],
+    name: "referralsCount",
+    inputs: [{ type: "address", name: "", internalType: "address" }],
+  },
+  {
+    type: "function",
+    stateMutability: "view",
+    outputs: [{ type: "address", name: "", internalType: "address" }],
+    name: "referrers",
+    inputs: [{ type: "address", name: "", internalType: "address" }],
+  },
+  {
+    type: "function",
+    stateMutability: "nonpayable",
+    outputs: [],
+    name: "renounceOwnership",
+    inputs: [],
+  },
+  {
+    type: "function",
+    stateMutability: "view",
+    outputs: [{ type: "uint256", name: "", internalType: "uint256" }],
+    name: "totalReferralCommissions",
+    inputs: [{ type: "address", name: "", internalType: "address" }],
+  },
+  {
+    type: "function",
+    stateMutability: "nonpayable",
+    outputs: [],
+    name: "transferOwnership",
+    inputs: [{ type: "address", name: "newOwner", internalType: "address" }],
+  },
+  {
+    type: "function",
+    stateMutability: "nonpayable",
+    outputs: [],
+    name: "updateOperator",
+    inputs: [
+      { type: "address", name: "_operator", internalType: "address" },
+      { type: "bool", name: "_status", internalType: "bool" },
+    ],
+  },
+];

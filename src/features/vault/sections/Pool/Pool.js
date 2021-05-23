@@ -10,7 +10,7 @@ import PoolDetails from '../PoolDetails/PoolDetails';
 import styles from './styles';
 const useStyles = createUseStyles(styles);
 
-const Pool = ({ pool, index, tokens, fetchBalancesDone, fetchPoolDataDone }) => {
+const Pool = ({ pool, index, tokens, fetchBalancesDone, fetchPoolDataDone, refAddress }) => {
   const classes = useStyles();
 
   const [isOpen, setIsOpen] = useState(false);
@@ -68,6 +68,7 @@ const Pool = ({ pool, index, tokens, fetchBalancesDone, fetchPoolDataDone }) => 
           // depositedBalance={depositedBalance}
           stakedBalance={stakedBalance}
           nextHarvestUntil={nextHarvestUntil}
+          refAddress={refAddress}
         />
       </Transition>
     </div>

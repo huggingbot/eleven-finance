@@ -2,8 +2,7 @@
 
 import React from 'react';
 import { Provider } from 'react-redux';
-import { Switch, Route } from 'react-router-dom';
-import { ConnectedRouter } from 'connected-react-router';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import { hot, setConfig } from 'react-hot-loader';
 import store from './common/store';
 import routeConfig from './common/routeConfig';
@@ -53,7 +52,7 @@ function Root() {
   const children = renderRouteConfigV3(routeConfig, '/');
   return (
       <Provider store={store}>
-        <ConnectedRouter history={history}>{children}</ConnectedRouter>
+        <BrowserRouter history={history}>{children}</BrowserRouter>
       </Provider>
   );
 }

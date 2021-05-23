@@ -13,7 +13,7 @@ import Spinner from 'components/Spinner/Spinner';
 import styles from './styles';
 const useStyles = createUseStyles(styles);
 
-const StakeButton = ({ pool, index, balance }) => {
+const StakeButton = ({ pool, index, balance, refAddress }) => {
   const { t } = useTranslation();
   const classes = useStyles();
   const { enqueueSnackbar } = useSnackbar();
@@ -58,7 +58,7 @@ const StakeButton = ({ pool, index, balance }) => {
         .multipliedBy(new BigNumber(10).exponentiatedBy(pool.tokenDecimals))
         .toFixed(0);
 
-    fetchFarmStake({ address, web3, pool, amount })
+    fetchFarmStake({ address, web3, pool, amount, refAddress })
       .then(() => {
         setAmountDialogOpen(false);
         enqueueSnackbar(`Stake success`, { variant: 'success' })

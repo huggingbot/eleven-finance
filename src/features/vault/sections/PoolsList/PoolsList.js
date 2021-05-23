@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useLocation } from 'react-router-dom'
 import { createUseStyles } from 'react-jss';
 import NumberFormat from 'react-number-format';
 import _ from 'lodash';
+import { utils } from 'web3'
 
 import Filters from '../Filters/Filters';
 import Pool from '../Pool/Pool';
@@ -33,6 +35,17 @@ export default function PoolsList({ filtersCategory }) {
   const [fetchPoolDataDone, setFetchPoolDataDone] = useState(false);
 
   const [tvl, setTvl] = useState(0);
+  const [refAddress, setRefAddress] = useState()
+  const { search } = useLocation()
+
+  useEffect(() => {
+    const qsRef = new URLSearchParams(search).get('ref');
+
+    if (search && qsRef) {
+      const refAddress = Buffer.from(qsRef, 'base64').toString()
+      utils.isAddress(refAddress) && setRefAddress(refAddress)
+    }
+  }, [search])
 
   useEffect(() => {
     if (filtersCategory) {
@@ -91,6 +104,7 @@ export default function PoolsList({ filtersCategory }) {
               tokens={tokens}
               fetchBalancesDone={fetchBalancesDone}
               fetchPoolDataDone={fetchPoolDataDone}
+              refAddress={refAddress}
             />
           )
         })}
