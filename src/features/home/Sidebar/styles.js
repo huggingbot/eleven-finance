@@ -172,6 +172,10 @@ const styles = {
     listStyle: 'none',
     padding: '6px 13px',
     marginBottom: 5,
+    color: COLORS.primary,
+    fontSize: FONT.size.normal,
+    fontWeight: 'bold',
+    lineHeight: '22px',
 
     borderRadius: BORDER.radius,
 
@@ -184,15 +188,9 @@ const styles = {
       display: 'inline-block'
     },
 
-    '& a': {
-      color: COLORS.primary,
-      fontSize: FONT.size.normal,
-      fontWeight: 'bold',
-      lineHeight: '22px'
-    },
-
     '&:hover': {
       background: COLORS.bgDark,
+      cursor: 'pointer',
     },
 
     '&.active': {

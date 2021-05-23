@@ -1,6 +1,7 @@
-import React, { Fragment, useEffect, useState } from 'react';
+import React, { Fragment, useEffect, useLayoutEffect, useState, useCallback } from 'react';
 import { createUseStyles } from 'react-jss';
 import { Transition } from '@headlessui/react';
+import { useHistory, useLocation } from 'react-router-dom'
 import { disableBodyScroll, enableBodyScroll } from 'body-scroll-lock';
 
 import { useConnectWallet, useFetchTokenPrice } from '../redux/hooks';
@@ -8,6 +9,7 @@ import { useConnectWallet, useFetchTokenPrice } from '../redux/hooks';
 import Loader from 'components/Loader/Loader';
 import {
   LightningBoltIcon,
+  UsersIcon,
   DocumentTextIcon,
   ExternalLinkIcon,
   FingerPrintIcon,
@@ -26,11 +28,14 @@ const useStyles = createUseStyles(styles);
 
 const Sidebar = ({ connected, address, connectWallet, disconnectWallet }) => {
   const classes = useStyles();
+  const history = useHistory()
+  const { pathname } = useLocation()
   const { web3 } = useConnectWallet();
   const { tokenPriceUsd, fetchTokenPrice, fetchTokenPriceDone } = useFetchTokenPrice();
 
   const [isOpen, setIsOpen] = useState(false);
   const [shortAddress, setShortAddress] = useState('');
+  const [activeLink, setActiveLink] = useState({ pools: `${classes.menuItem} active`, referrals: classes.menuItem })
 
   isOpen ? disableBodyScroll(document) : enableBodyScroll(document)
 
@@ -40,7 +45,6 @@ const Sidebar = ({ connected, address, connectWallet, disconnectWallet }) => {
         fetchTokenPrice({ web3 });
       }
     }
-
     fetch();
 
     const id = setInterval(fetch, 60000);
@@ -51,7 +55,6 @@ const Sidebar = ({ connected, address, connectWallet, disconnectWallet }) => {
     if (! connected) {
       return;
     }
-
     if (address.length < 11) {
       setShortAddress(address)
     } else {
@@ -66,6 +69,36 @@ const Sidebar = ({ connected, address, connectWallet, disconnectWallet }) => {
   const onOverlayClick = () => {
     setIsOpen(false);
   }
+
+  const onLinkClick = useCallback(link => () => {
+      setActiveLink(activeLink => Object.keys(activeLink).reduce((obj, _link) => {
+        if (link === _link) {
+          return { ...obj, [_link]: `${classes.menuItem} active`}
+        } else {
+          return { ...obj, [_link]: `${classes.menuItem}`}
+        }
+      }, {}))
+
+      if (link === 'pools') {
+        history.push('/')
+      } else {
+        history.push(`/${link}`)
+      }
+  }, [])
+  const onPoolsLinkClick = useCallback(onLinkClick('pools'), [onLinkClick])
+  const onReferralsLinkClick = useCallback(onLinkClick('referrals'), [onLinkClick])
+  const onDocumentationClick = useCallback(() => window.open(
+    'https://11eleven-11finance.gitbook.io/eleven-finance/',
+    '_blank'
+  ), [])
+
+  useLayoutEffect(() => {
+    if (pathname === '/') {
+      onPoolsLinkClick()
+    } else {
+      onLinkClick(pathname.replace('/', ''))()
+    }
+  }, [pathname, onPoolsLinkClick, onLinkClick])
 
   return (
     <>
@@ -120,18 +153,19 @@ const Sidebar = ({ connected, address, connectWallet, disconnectWallet }) => {
           <div className={classes.divider}></div>
 
           <ul className={classes.menu}>
-            <li className={classes.menuItem + ' active'}>
-              <a href="/#/vault">
-                <LightningBoltIcon />
-                Pools
-              </a>
+            <li className={activeLink.pools} onClick={onPoolsLinkClick}>
+              <LightningBoltIcon />
+              Pools
             </li>
 
-            <li className={classes.menuItem}>
-              <a href="https://11eleven-11finance.gitbook.io/eleven-finance/" target="_blank">
-                <DocumentTextIcon />
-                Documentation
-              </a>
+            <li className={activeLink.referrals} onClick={onReferralsLinkClick}>
+              <UsersIcon />
+              Referrals
+            </li>
+
+            <li className={classes.menuItem} onClick={onDocumentationClick}>
+              <DocumentTextIcon />
+              Documentation
             </li>
           </ul>
         </div>
