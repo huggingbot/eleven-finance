@@ -1,4 +1,5 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# eleven-finance
+A frontend app for a DeFi yield farming protocol using web3.js and ethers.js
 
 ## Available Scripts
 
